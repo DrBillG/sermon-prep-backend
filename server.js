@@ -288,11 +288,9 @@ app.post('/api/generate-sermon-prep', async (req, res) => {
       return res.status(400).json({ error: 'Passage is required' });
     }
 
-    const modeInstruction = mode === 'quick' 
-      ? '\n\nIMPORTANT: Provide a QUICK OVERVIEW. Use the structured format with bold labels and bullets, but keep each explanation to 1-2 sentences. Focus on essentials but maintain the clear formatting.'
-      : '\n\nIMPORTANT: Provide a DEEP DIVE analysis. Use the full structured format with bold labels, bullets, and numbers. Be thorough with 2-3+ sentences for each point. Give rich, detailed content.';
-
-    const userMessage = `Please provide sermon preparation analysis for: ${passage}${modeInstruction}`;
+const modeInstruction = mode === 'quick' 
+      ? '\n\nIMPORTANT: Provide a QUICK OVERVIEW. Use the structured format with bold labels and bullets, but keep each explanation to 1 sentence. Be concise and focus only on essentials.'
+      : '\n\nIMPORTANT: Provide a BALANCED analysis. Use the full structured format with bold labels, bullets, and numbers. Keep most explanations to 1-2 sentences - be helpful but not overwhelming. Reserve longer explanations (2-3 sentences) only for the most complex or important points.';    const userMessage = `Please provide sermon preparation analysis for: ${passage}${modeInstruction}`;
 
     const message = await anthropic.messages.create({
       model: 'claude-sonnet-4-5-20250929',
